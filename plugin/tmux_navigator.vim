@@ -15,27 +15,27 @@ function! s:VimNavigate(direction)
 endfunction
 
 if !get(g:, 'tmux_navigator_no_mappings', 0)
-  nnoremap <silent> <c-h> :<C-U>TmuxNavigateLeft<cr>
-  nnoremap <silent> <c-j> :<C-U>TmuxNavigateDown<cr>
-  nnoremap <silent> <c-k> :<C-U>TmuxNavigateUp<cr>
-  nnoremap <silent> <c-l> :<C-U>TmuxNavigateRight<cr>
+  nnoremap <silent> <c-j> :<C-U>TmuxNavigateLeft<cr>
+  nnoremap <silent> <c-k> :<C-U>TmuxNavigateDown<cr>
+  nnoremap <silent> <c-l> :<C-U>TmuxNavigateUp<cr>
+  nnoremap <silent> <c-;> :<C-U>TmuxNavigateRight<cr>
   nnoremap <silent> <c-\> :<C-U>TmuxNavigatePrevious<cr>
 
   if !empty($TMUX)
     function! IsFZF()
       return &ft == 'fzf'
     endfunction
-    tnoremap <expr> <silent> <C-h> IsFZF() ? "\<C-h>" : "\<C-w>:\<C-U> TmuxNavigateLeft\<cr>"
-    tnoremap <expr> <silent> <C-j> IsFZF() ? "\<C-j>" : "\<C-w>:\<C-U> TmuxNavigateDown\<cr>"
-    tnoremap <expr> <silent> <C-k> IsFZF() ? "\<C-k>" : "\<C-w>:\<C-U> TmuxNavigateUp\<cr>"
-    tnoremap <expr> <silent> <C-l> IsFZF() ? "\<C-l>" : "\<C-w>:\<C-U> TmuxNavigateRight\<cr>"
+    tnoremap <expr> <silent> <C-j> IsFZF() ? "\<C-j>" : "\<C-w>:\<C-U> TmuxNavigateLeft\<cr>"
+    tnoremap <expr> <silent> <C-k> IsFZF() ? "\<C-k>" : "\<C-w>:\<C-U> TmuxNavigateDown\<cr>"
+    tnoremap <expr> <silent> <C-l> IsFZF() ? "\<C-l>" : "\<C-w>:\<C-U> TmuxNavigateUp\<cr>"
+    tnoremap <expr> <silent> <C-;> IsFZF() ? "\<C-;>" : "\<C-w>:\<C-U> TmuxNavigateRight\<cr>"
   endif
 
   if !get(g:, 'tmux_navigator_disable_netrw_workaround', 0)
     if !exists('g:Netrw_UserMaps')
-      let g:Netrw_UserMaps = [['<C-l>', '<C-U>TmuxNavigateRight<cr>']]
+      let g:Netrw_UserMaps = [['<C-;>', '<C-U>TmuxNavigateRight<cr>']]
     else
-      echohl ErrorMsg | echo 'vim-tmux-navigator conflicts with netrw <C-l> mapping. See https://github.com/christoomey/vim-tmux-navigator#netrw or add `let g:tmux_navigator_disable_netrw_workaround = 1` to suppress this warning.' | echohl None
+      echohl ErrorMsg | echo 'vim-tmux-navigator conflicts with netrw <C-;> mapping. See https://github.com/christoomey/vim-tmux-navigator#netrw or add `let g:tmux_navigator_disable_netrw_workaround = 1` to suppress this warning.' | echohl None
     endif
   endif
 endif

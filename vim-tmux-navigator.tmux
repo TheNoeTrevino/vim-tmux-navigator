@@ -8,14 +8,14 @@ get_tmux_option() {
   #       error code when an option is not defined. Therefore we need to first
   #       test if the option exists, and only then try to get its value or fall
   #       back to the default.
-  value="$([[ -n $(tmux show-options -gq "$option") ]] \
-      && tmux show-option -gqv "$option" \
-      || echo "$default")"
+  value="$([[ -n $(tmux show-options -gq "$option") ]] &&
+    tmux show-option -gqv "$option" ||
+    echo "$default")"
 
   # Deprecated, for backward compatibility
   if [[ $value == 'null' ]]; then
-      echo ""
-      return
+    echo ""
+    return
   fi
 
   echo "$value"
@@ -43,17 +43,17 @@ bind_key_vim() {
 }
 
 main() {
-  move_left="$(get_tmux_option "@vim_navigator_mapping_left" 'C-h')"
-  move_right="$(get_tmux_option "@vim_navigator_mapping_right" 'C-l')"
-  move_up="$(get_tmux_option "@vim_navigator_mapping_up" 'C-k')"
-  move_down="$(get_tmux_option "@vim_navigator_mapping_down" 'C-j')"
+  move_left="$(get_tmux_option "@vim_navigator_mapping_left" 'C-j')"
+  move_right="$(get_tmux_option "@vim_navigator_mapping_right" 'C-;')"
+  move_up="$(get_tmux_option "@vim_navigator_mapping_up" 'C-l')"
+  move_down="$(get_tmux_option "@vim_navigator_mapping_down" 'C-k')"
   move_prev="$(get_tmux_option "@vim_navigator_mapping_prev" 'C-\')"
 
-  for k in $(echo "$move_left");  do bind_key_vim "$k" "select-pane -L"; done
-  for k in $(echo "$move_down");  do bind_key_vim "$k" "select-pane -D"; done
-  for k in $(echo "$move_up");    do bind_key_vim "$k" "select-pane -U"; done
+  for k in $(echo "$move_left"); do bind_key_vim "$k" "select-pane -L"; done
+  for k in $(echo "$move_down"); do bind_key_vim "$k" "select-pane -D"; done
+  for k in $(echo "$move_up"); do bind_key_vim "$k" "select-pane -U"; done
   for k in $(echo "$move_right"); do bind_key_vim "$k" "select-pane -R"; done
-  for k in $(echo "$move_prev");  do bind_key_vim "$k" "select-pane -l"; done
+  for k in $(echo "$move_prev"); do bind_key_vim "$k" "select-pane -l"; done
 
   # Restoring clear screen
   clear_screen="$(get_tmux_option "@vim_navigator_prefix_mapping_clear_screen" 'C-l')"
